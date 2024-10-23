@@ -129,6 +129,58 @@ public class CompleteBinaryTree {
         return str;
     }
 
+    public boolean question1(){
+        Node node = root;
+        if (node==null){
+            return true;
+        }
+        return quest1_helper(node);
+    }
+    
+    private boolean quest1_helper(Node node){
+        //function that helps loop through the list and compares parent to its children nodes to make sure its greater than both to satisfy max heap
+        if (node.left==null && node.right==null)
+            return true;
+        
+        if (node.left.data > node.data)
+            return false;
+        
+        if (node.right.data > node.data)
+            return false;
+        
+        boolean left_sub = quest1_helper(node.left);
+        boolean right_sub = quest1_helper(node.right);
+        if (left_sub == true && right_sub == true)
+            return true;
+        else
+            return false;
+        }
+
+    
+    public CompleteBinaryTree question2(){
+        //creates tree separate from original tree so they can be edited separately after
+        CompleteBinaryTree clone = new CompleteBinaryTree();
+        //deals with empty case
+        if (this.root == null){
+            return clone;
+        }
+        // level order traversal essentially but adding to new tree instead of too a string
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(this.root);
+        
+        while (queue.isEmpty() != true) {
+            Node clone_node = queue.poll();
+            clone.insert(clone_node.data);
+            if (clone_node.left != null) 
+                queue.add(clone_node.left);
+
+            if (clone_node.right != null) 
+                queue.add(clone_node.right);
+        }
+        return clone; 
+    }
+  
+
     public static void main(String[] args) {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         tree.insert(1);
@@ -138,5 +190,6 @@ public class CompleteBinaryTree {
         tree.insert(5);
 
         System.out.println(tree.toString());
+
     }
 }
