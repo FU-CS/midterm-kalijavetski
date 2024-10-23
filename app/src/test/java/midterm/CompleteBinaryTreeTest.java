@@ -43,5 +43,112 @@ class CompleteBinaryTreeTest {
         assertEquals(tree.toString(), "1 2 4 ", "Deleting 3 should return '1 2 4'");
     }
 
+    @Test
+    void isMaxHeap_false() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+
+        assertEquals(false, tree.question1());
+    }
+
+    @Test
+    void isMaxHeap_true() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(3);
+        tree.insert(2);
+        tree.insert(1);
+
+        assertEquals(true, tree.question1());
+    }
+
+    @Test
+    void isMaxHeap_out_order() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(2);
+        tree.insert(1);
+        assertEquals(true, tree.question1());
+    }
+
+    @Test
+    void isMaxHeap_out_order_2() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(8);
+        tree.insert(5);
+        tree.insert(6);
+        tree.insert(2);
+        tree.insert(1);
+        tree.insert(3);
+        tree.insert(4);
+        assertEquals(true, tree.question1());
+    }
+
+    @Test
+    void isMaxHeap_delete_root() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(2);
+        tree.insert(1);
+        tree.delete(5);
+        tree.insert(5);
+        assertEquals(false, tree.question1());
+    }
+
+
+    @Test
+    void isMaxHeap_empty() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        assertEquals(true, tree.question1());
+    }
+
+    @Test
+    void clonetree() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        CompleteBinaryTree cloned = tree.question2();
+        assertEquals(tree.toString(), cloned.toString());
+    }
+
+    @Test
+    void clonetree_edits() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        CompleteBinaryTree cloned = tree.question2();
+        assertEquals(tree.toString(), cloned.toString());
+        cloned.insert(5);
+        cloned.insert(4);
+        tree.insert(6);
+        assertEquals(tree.toString(), "1 2 3 6 ", "Should return '1 2 3 4'");
+        assertEquals(cloned.toString(), "1 2 3 5 4 ", "Should return '1 2 3 4'");  
+    }
+
+    @Test
+    void clonetree_empty() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        CompleteBinaryTree cloned = tree.question2();
+        assertEquals(tree.getRoot(), cloned.getRoot());
+    }
+
+    @Test
+    void clonetree_empty_edit() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        CompleteBinaryTree cloned = tree.question2();
+        cloned.insert(1);
+        cloned.insert(3);
+        cloned.insert(5);
+        assertEquals("1 3 5 ", cloned.toString());
+        assertEquals(null, tree.getRoot());
+    }
+
 
 }
